@@ -1,0 +1,17 @@
+﻿<div class="col-md-4 mb-4">
+    <div class="card h-100 bg-light card-animation" style="border-radius: 5%">
+        <a href="@Url.Action("Details", "Item", new { id = Model.ItemId })" class="text-decoration-none text-dark">
+            <div style="position: relative; overflow: hidden; height: 200px;">
+                <img src="@Model.ImageUrl" class="card-img-top" aria-hidden="true" alt="@Model.Category" style="position: absolute; object-fit: cover; height: 100%; width: 100%; border-radius: 5%">
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">@Model.Category</h5>
+                <div class="d-flex justify-content-between">
+                    <p class="card-text">@Model.Renting.ToString("0.00 NOK")</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    
+</div>
+

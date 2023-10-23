@@ -1,0 +1,43 @@
+﻿
+@{
+    var bookingTableMessage = TempData["BookingTable"] as string;
+    var bookingConfirmationMessage = TempData["BookingConfirmation"] as string;
+}
+
+<html>
+<head>
+    <title>Booking Receipt</title>
+</head>
+<body>
+    <h1>Booking Receipt</h1>
+    <div class="flex-box bg-light ">
+        <div>
+            @if (!string.IsNullOrEmpty(bookingTableMessage))
+            {
+                @Html.Raw(bookingTableMessage)
+            }
+        </div>
+
+    <div >
+            @if (!string.IsNullOrEmpty(bookingConfirmationMessage))
+            {
+                @Html.Raw(bookingConfirmationMessage)
+            }
+        </div>
+    </div>
+
+    <div>
+        <a asp-controller="Home" asp-action="index" class="btn btn-outline-primary">Back</a>
+    </div>
+
+    @* Legg til JavaScript nederst for å sikre at HTML er lastet før JavaScript kjører *@
+    @if (!string.IsNullOrEmpty(bookingConfirmationMessage))
+    {
+        <script>
+            window.onload = function () {
+                alert('Booking Confirmation:\n\n' + '@Html.Raw(bookingConfirmationMessage)');
+            };
+        </script>
+    }
+</body>
+</html>

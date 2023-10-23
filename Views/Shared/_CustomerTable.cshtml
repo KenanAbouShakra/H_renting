@@ -1,0 +1,36 @@
+﻿@model IEnumerable<HouseRenting.Models.Customer>
+<div class="container">
+    <h1>List of Customers</h1>
+    <table class="table table-striped">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Booking</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+        @foreach (var c in Model)
+        {
+            <tr>
+                <td>@c.CustomerId</td>
+                <td>@c.Name</td>
+                <td>@c.Email</td>
+                <td>@c.Phone</td>
+                @if (c.Bookings != null)
+                {
+                    <td> <p>@string.Join(", ", c.Bookings.Select(booking => $"House {booking.ItemId}"))</p> </td>
+                    <td> <p>@string.Join(", ", c.Bookings.Select(booking => $"{booking.BookingDate}"))</p></td>
+                }
+                <td>
+                    <p>
+                        <a class="btn btn-outline-danger" asp-route-id="@c.CustomerId"
+                           asp-controller="Customer"
+                           asp-action="DeleteCustomer">Delete this Booking</a>
+                    </p>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,49 @@
+﻿@model IEnumerable<HouseRenting.Models.Item>
+<div class="container">
+    <h1>@ViewBag.CurrentViewName</h1>
+    <table class="table table-hover">
+        <tr>
+            <th>Id</th>
+            <th>Category</th>
+            <th>Rooms</th>
+            <th>Area</th>
+            <th>Renting</th>
+            <th>Images</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td onclick="location.href='@Url.Action("Details", "Item", new { id = item.ItemId })';" style="cursor:pointer;">@item.ItemId</td>
+                <td onclick="location.href='@Url.Action("Details", "Item", new { id = item.ItemId })';" style="cursor:pointer;">@item.Category</td>
+                <td onclick="location.href='@Url.Action("Details", "Item", new { id = item.ItemId })';" style="cursor:pointer;">@item.Rooms</td>
+                <td onclick="location.href='@Url.Action("Details", "Item", new { id = item.ItemId })';" style="cursor:pointer;">@item.Area</td>
+                <td onclick="location.href='@Url.Action("Details", "Item", new { id = item.ItemId })';" style="cursor:pointer;">@item.Renting.ToString("0.00 NOK")</td>
+                <td onclick="location.href='@Url.Action("Details", "Item", new { id = item.ItemId })';" style="cursor:pointer;">
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        
+                            <img src="@item.ImageUrl" alt="Item Image" style="max-width: 100px; max-height: 100px;" />
+                        
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Update" asp-route-id="@item.ItemId" class="btn btn-outline-success">Update</a>
+                    <a asp-action="Delete" asp-route-id="@item.ItemId" class="btn btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </table>
+    <p>
+        <a class="btn btn-outline-primary"
+        asp-controller="Item"
+        asp-action="Create">New House</a>
+        
+        @*<a class="btn btn-outline-secondary" asp-area=""
+        asp-action="BookingConsole" target="_blank">Console Bookings</a>*@
+    </p>
+</div>
