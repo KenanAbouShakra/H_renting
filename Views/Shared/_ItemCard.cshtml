@@ -8,7 +8,13 @@
                 <h5 class="card-title">@Model.Category</h5>
                 <div class="d-flex justify-content-between">
                     <p class="card-text">@Model.Renting.ToString("0.00 NOK")</p>
+                    
+                    @if (Model.IsBooked == true)
+                    {
+                        <p class="card-text btn btn-danger" style="text-align: right;">Booked</p>
+                    }
                 </div>
+                
             </div>
         </a>
     </div>

@@ -60,9 +60,10 @@ namespace HouseRenting.DAL
                     {
                         item.IsBooked = false;
                     }
+                    _db.Customers.RemoveRange(bookings.Select(b => b.Customer));
                 }
 
-                _db.Customers.RemoveRange(bookings.Select(b => b.Customer));
+                _db.Customers.RemoveRange(customer);
                 await _db.SaveChangesAsync();
                 return true;
             }
