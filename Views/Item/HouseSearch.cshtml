@@ -1,0 +1,26 @@
+﻿@model List<HouseRenting.Models.Item>
+
+<!-- ======= Services Section ======= -->
+<section id="services" class="services">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+
+            <p>The Result Of Your Search</p>
+        </div>
+
+        <div class="row">
+            @foreach (var item in Model)
+            {
+
+                <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="icon-box">
+                        <img src="@item.ImageUrl" class="HouseImage" width="100%" height="100%" />
+                        <h4><a href="">@item.Category</a></h4>
+                        <p>@item.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section><!-- End Services Section -->
