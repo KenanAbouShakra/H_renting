@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HouseRenting.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace HouseRenting.Controllers
 {
@@ -25,11 +26,18 @@ namespace HouseRenting.Controllers
 
         public async Task<IActionResult> Table()
         {
-            string loggedInUserEmail = User.Identity.Name;
+            string loggedInUserEmail = User.FindFirstValue(ClaimTypes.Email);
             List<Booking> bookings = await _itemDbContext.Bookings
                 .Where(b => b.Customer.Email == loggedInUserEmail)
                 .ToListAsync();
             return View(bookings);
+        }
+        public async Task<IActionResult> AllBookingsTable()
+        {
+            //string loggedInUserEmail = User.Identity.Name;
+            List<Booking> allBookings = await _itemDbContext.Bookings        
+                .ToListAsync();
+            return View(allBookings);
         }
 
 

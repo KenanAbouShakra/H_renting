@@ -3,6 +3,8 @@ using HouseRenting.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Claims;
 
 namespace HouseRenting.Controllers
 {
@@ -22,7 +24,7 @@ namespace HouseRenting.Controllers
         public async Task<IActionResult> Table()
         {
 
-            string loggedInUserEmail = User.Identity.Name;
+            string loggedInUserEmail = User.FindFirstValue(ClaimTypes.Email);
 
 
             List<Customer> customers = await _itemDbContext.Customers
@@ -31,7 +33,15 @@ namespace HouseRenting.Controllers
 
             return View(customers);
         }
-
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> AllCustomersTable()
+        {
+            //string loggedInUserEmail = User.Identity.Name;
+            List<Customer> allCustomers = await _itemDbContext.Customers
+                 .ToListAsync();
+            return View(allCustomers);
+        }
 
         [HttpGet]
         [Authorize]
@@ -57,6 +67,34 @@ namespace HouseRenting.Controllers
             }
             return RedirectToAction(nameof(Table));
         }
-    }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> DeleteAllCustomers()
+        {
+            var customers = await _customerRepository.GetAll();
+            if (customers == null)
+            {
+                _logger.LogError("[CustomerController] Customers not found");
+                return BadRequest("Customers not found");
+            }
 
+            return View("DeleteAllCustomersConfirmation");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAllCustomersConfirmed()
+        {
+            bool ok = await _customerRepository.DeleteAllCustomers();
+
+            if (!ok)
+            {
+                _logger.LogError("[CustomerController] Customers deletion failed ");
+                return BadRequest("Customer deletion failed");
+            }
+
+            return RedirectToAction(nameof(AllCustomersTable));
+        }
+
+    }
 }
+

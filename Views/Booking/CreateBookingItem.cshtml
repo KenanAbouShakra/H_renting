@@ -1,11 +1,13 @@
-﻿@model CreateBookingViewModel
+﻿@using System.Security.Claims
+
+@model CreateBookingViewModel
 
 <h2>Create Booking</h2>
 <div asp-validation-summary="All" class="text-danger"></div>
 <form asp-action="CreateBookingItem">
     <div class="form-group">
         <label asp-for="Booking.Customer.Name">Name</label> <span class="text-bg-danger">*</span>
-        <input asp-for="Booking.Customer.Name" class="form-control" />
+        <input asp-for="Booking.Customer.Name" class="form-control" placeholder="@User.FindFirstValue(ClaimTypes.Name)" />
         <span asp-validation-for="Booking.Customer.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
@@ -13,11 +15,14 @@
         <input asp-for="Booking.Customer.Phone" class="form-control" />
         <span asp-validation-for="Booking.Customer.Phone" class="text-danger"></span>
     </div>
-    <div class="form-group">
+
+    <input type="hidden" asp-for="Booking.Customer.Email" value="@User.FindFirstValue(ClaimTypes.Email)" />
+        
+   <!-- <div class="form-group">
         <label asp-for="Booking.Customer.Email">Email</label> <span class="text-bg-danger">*</span>
         <input asp-for="Booking.Customer.Email" class="form-control" />
         <span asp-validation-for="Booking.Customer.Email" class="text-danger"></span>
-    </div>
+     </div>-->
 
     <div>
         <input type="hidden" asp-for="Booking.ItemId" value="@Model.Item.ItemId" />

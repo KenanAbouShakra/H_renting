@@ -40,10 +40,10 @@ button.accept-policy {
     line-height: inherit;
 }
 
-.footer {
-    position: absolute;
+#footer {
+    margin:25px;
     bottom: 0;
     width: 100%;
-    white-space: nowrap;
+    padding:25px;
     line-height: 60px;
 }

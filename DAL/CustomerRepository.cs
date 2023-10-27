@@ -13,6 +13,19 @@ namespace HouseRenting.DAL
             _db = db;
             _logger = logger;
         }
+        public async Task<IEnumerable<Customer>> GetAll() {
+            try
+            {
+                
+
+                return await _db.Customers.ToListAsync(); ;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("[CustomerRepository] GetAll() failed when GetCustomers, error message: {e}, stack trace: {stackTrace}",  e.Message, e.StackTrace);
+                return null;
+            }
+        }
 
         public async Task<Customer?> GetCustomerById(int id)
         {
@@ -70,6 +83,34 @@ namespace HouseRenting.DAL
             catch (Exception e)
             {
                 _logger.LogError("[CustomerRepository] Customer deletion failed for the CustomerId {CustomerId:0000}, error message: {e}, stack trace: {stackTrace}", id, e.Message, e.StackTrace);
+                return false;
+            }
+        }
+        public async Task<bool> DeleteAllCustomers()
+        {
+            try
+            {               
+                var bookings = await _db.Bookings.ToListAsync();
+
+                foreach (var booking in bookings)
+                {
+                    var item = await _db.Items.FindAsync(booking.ItemId);
+
+                    if (item != null)
+                    {
+                        item.IsBooked = false;
+                    }
+                    
+                }
+
+                _db.Customers.RemoveRange(_db.Customers);
+                await _db.SaveChangesAsync();
+                return true;
+                
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("[CustomerRepository] Customers deletion failed, error message: {e}, stack trace: {stackTrace}",  e.Message, e.StackTrace);
                 return false;
             }
         }

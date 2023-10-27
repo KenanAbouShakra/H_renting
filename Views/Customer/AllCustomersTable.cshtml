@@ -1,0 +1,9 @@
+﻿@model IEnumerable<Customer>
+
+<partial name="_CustomerTable" model="Model" />
+
+<form asp-controller="Customer" asp-action="DeleteAllCustomers" method="get">
+    <button type="submit" class="btn btn-outline-danger">
+        Delete All Customers
+    </button>
+</form>

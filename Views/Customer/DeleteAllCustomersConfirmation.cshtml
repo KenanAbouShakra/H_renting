@@ -1,0 +1,20 @@
+﻿@model IEnumerable<Customer>
+@{
+<script>
+        window.onload = function () {
+            alert('Delete all Cusomers Confirmation: \n\n Are you sure?');
+        };
+    </script>}
+
+
+<div class="container">
+    <div class="alert alert-danger" role="alert">
+        <h2>Delete All Customers</h2>
+        <h3>Are you sure you want to delete All Customers?</h3>
+
+        <form asp-controller="Customer" asp-action="DeleteAllCustomersConfirmed" method="post">
+            <button type="submit" class="btn btn-outline-danger">Delete</button>
+            <a asp-action="AllCustomersTable" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
